@@ -16,12 +16,12 @@ var romanToASCIIDict = {
 };
 
 function getRomanNumber(number) {
-	if (number.toString().length == 1) {
+	if (number < 10) {
 		var romanNumber = '';
 		romanNumber += myUnitsDict[number];
 		return romanNumber;
 	}
-	else if(number.toString()[0] != 0 && number.toString()[1] == 0) {
+	else if(number / 10 != 0 && number % 10 == 0) {
 		var romanNumber = '';
 		romanNumber += myDozensDict[number.toString()[0]];
 		return romanNumber;	
@@ -36,28 +36,28 @@ function getRomanNumber(number) {
 
 function romanToASCII (romanTime) {
 	var resultArray = ['', '', '', '', '', ''];
-	for (var i = 0, len = romanTime.length; i < len; i++) {
-		var index = romanToASCIIDict.roman.indexOf(romanTime[i]);
+	for (var symbol = 0, len = romanTime.length; symbol < len; symbol++) {
+		var index = romanToASCIIDict.roman.indexOf(romanTime[symbol]);
 		for (var line = 0, l = resultArray.length; line < l; line++) {
 			resultArray[line] = resultArray[line] + romanToASCIIDict.ASCII[index][line] ;
 		}
 	};
 	
-	for (var i = 0, len = resultArray.length; i < len; i++) {
+	for (var resultLine = 0, len = resultArray.length; resultLine < len; resultLine++) {
 		var line = '';
 		for (var index = 0, l = resultArray[0].length; index < l; index++) {
-			line += resultArray[i][index];
+			line += resultArray[resultLine][index];
 		}
 		console.log(line);
 	}
 }
 
-function ifDataCorrect () {
-	return (typeof(hours) != NaN && typeof(minutes) != NaN
+function isDataCorrect () {
+	return (!isNaN(hours) && !isNaN(minutes)
 		&& hours > -1 && hours < 25 && minutes > -1 && minutes < 60)
 }
 function getRomanTime(hours, minutes) {
-	if (ifDataCorrect()) {
+	if (isDataCorrect()) {
 		var romanTime = '';
 		romanTime += getRomanNumber(hours);
 		romanTime += ':';
